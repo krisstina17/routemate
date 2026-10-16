@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<potovanja>
+   <potovanje id="P001">
+      <uporabnikId>U001</uporabnikId>
+      <voziloId>V001</voziloId>
+      <zacetek>Maribor</zacetek>
+      <cilj>Ljubljana</cilj>
+      <datum>2026-10-20</datum>
+      <razdaljaKm>130.5</razdaljaKm>
+      <trajanjeMin>95</trajanjeMin>
+      <opomba>Poslovno potovanje</opomba>
+   </potovanje>
+   <potovanje id="P006">
+      <uporabnikId>U005</uporabnikId>
+      <voziloId>V006</voziloId>
+      <zacetek>Celje</zacetek>
+      <cilj>Ljubljana</cilj>
+      <datum>2026-10-28</datum>
+      <razdaljaKm>75.0</razdaljaKm>
+      <trajanjeMin>55</trajanjeMin>
+      <opomba />
+   </potovanje>
+   <potovanje id="P010">
+      <uporabnikId>U009</uporabnikId>
+      <voziloId>V010</voziloId>
+      <zacetek>Maribor</zacetek>
+      <cilj>Ljubljana</cilj>
+      <datum>2026-11-22</datum>
+      <razdaljaKm>130.5</razdaljaKm>
+      <trajanjeMin>100</trajanjeMin>
+      <opomba>Obisk konference</opomba>
+   </potovanje>
+   <potovanje id="P014">
+      <uporabnikId>U013</uporabnikId>
+      <voziloId>V014</voziloId>
+      <zacetek>Maribor</zacetek>
+      <cilj>Ljubljana</cilj>
+      <datum>2026-12-15</datum>
+      <razdaljaKm>130.5</razdaljaKm>
+      <trajanjeMin>95</trajanjeMin>
+      <opomba>Obisk zdravnika</opomba>
+   </potovanje>
+</potovanja>

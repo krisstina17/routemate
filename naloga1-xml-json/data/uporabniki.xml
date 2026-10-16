@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uporabniki>
+    <uporabnik id="U001">
+        <ime>Kristina</ime>
+        <priimek>Radeva</priimek>
+    </uporabnik>
+    <uporabnik id="U002">
+        <ime>Nenad</ime>
+        <priimek>Jocic</priimek>
+    </uporabnik>
+    <uporabnik id="U003">
+        <ime>Ana</ime>
+        <priimek>Novak</priimek>
+    </uporabnik>
+    <uporabnik id="U004">
+        <ime>Luka</ime>
+        <priimek>Horvat</priimek>
+    </uporabnik>
+    <uporabnik id="U005">
+        <ime>Maja</ime>
+        <priimek>Kovac</priimek>
+    </uporabnik>
+    <uporabnik id="U006">
+        <ime>Marko</ime>
+        <priimek>Zupan</priimek>
+    </uporabnik>
+    <uporabnik id="U007">
+        <ime>Sara</ime>
+        <priimek>Petrovic</priimek>
+    </uporabnik>
+    <uporabnik id="U008">
+        <ime>David</ime>
+        <priimek>Kralj</priimek>
+    </uporabnik>
+    <uporabnik id="U009">
+        <ime>Nina</ime>
+        <priimek>Vidmar</priimek>
+    </uporabnik>
+    <uporabnik id="U010">
+        <ime>Filip</ime>
+        <priimek>Jovanovic</priimek>
+    </uporabnik>
+    <uporabnik id="U011">
+        <ime>Eva</ime>
+        <priimek>Rozman</priimek>
+    </uporabnik>
+    <uporabnik id="U012">
+        <ime>Jan</ime>
+        <priimek>Bizjak</priimek>
+    </uporabnik>
+    <uporabnik id="U013">
+        <ime>Teja</ime>
+        <priimek>Golob</priimek>
+    </uporabnik>
+    <uporabnik id="U014">
+        <ime>Miha</ime>
+        <priimek>Potocnik</priimek>
+    </uporabnik>
+    <uporabnik id="U015">
+        <ime>Petra</ime>
+        <priimek>Kos</priimek>
+    </uporabnik>
+</uporabniki>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vozila>
+    <vozilo id="V001">
+        <uporabnikId>U001</uporabnikId>
+        <znamka>Volkswagen</znamka>
+        <model>Golf</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>6.5</poraba>
+    </vozilo>
+    <vozilo id="V002">
+        <uporabnikId>U001</uporabnikId>
+        <znamka>Renault</znamka>
+        <model>Clio</model>
+        <vrstaGoriva>dizel</vrstaGoriva>
+        <poraba>4.8</poraba>
+    </vozilo>
+    <vozilo id="V003">
+        <uporabnikId>U002</uporabnikId>
+        <znamka>Opel</znamka>
+        <model>Corsa</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>5.7</poraba>
+    </vozilo>
+    <vozilo id="V004">
+        <uporabnikId>U003</uporabnikId>
+        <znamka>Skoda</znamka>
+        <model>Octavia</model>
+        <vrstaGoriva>dizel</vrstaGoriva>
+        <poraba>5.2</poraba>
+    </vozilo>
+    <vozilo id="V005">
+        <uporabnikId>U004</uporabnikId>
+        <znamka>BMW</znamka>
+        <model>320d</model>
+        <vrstaGoriva>dizel</vrstaGoriva>
+        <poraba>5.8</poraba>
+    </vozilo>
+    <vozilo id="V006">
+        <uporabnikId>U005</uporabnikId>
+        <znamka>Toyota</znamka>
+        <model>Yaris</model>
+        <vrstaGoriva>hibrid</vrstaGoriva>
+        <poraba>4.2</poraba>
+    </vozilo>
+    <vozilo id="V007">
+        <uporabnikId>U006</uporabnikId>
+        <znamka>Ford</znamka>
+        <model>Focus</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>6.3</poraba>
+    </vozilo>
+    <vozilo id="V008">
+        <uporabnikId>U007</uporabnikId>
+        <znamka>Peugeot</znamka>
+        <model>208</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>5.5</poraba>
+    </vozilo>
+    <vozilo id="V009">
+        <uporabnikId>U008</uporabnikId>
+        <znamka>Audi</znamka>
+        <model>A4</model>
+        <vrstaGoriva>dizel</vrstaGoriva>
+        <poraba>5.9</poraba>
+    </vozilo>
+    <vozilo id="V010">
+        <uporabnikId>U009</uporabnikId>
+        <znamka>Hyundai</znamka>
+        <model>i30</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>6.1</poraba>
+    </vozilo>
+    <vozilo id="V011">
+        <uporabnikId>U010</uporabnikId>
+        <znamka>Seat</znamka>
+        <model>Leon</model>
+        <vrstaGoriva>dizel</vrstaGoriva>
+        <poraba>5.1</poraba>
+    </vozilo>
+    <vozilo id="V012">
+        <uporabnikId>U011</uporabnikId>
+        <znamka>Kia</znamka>
+        <model>Ceed</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>6.0</poraba>
+    </vozilo>
+    <vozilo id="V013">
+        <uporabnikId>U012</uporabnikId>
+        <znamka>Mercedes-Benz</znamka>
+        <model>A180</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>6.4</poraba>
+    </vozilo>
+    <vozilo id="V014">
+        <uporabnikId>U013</uporabnikId>
+        <znamka>Citroen</znamka>
+        <model>C3</model>
+        <vrstaGoriva>bencin</vrstaGoriva>
+        <poraba>5.6</poraba>
+    </vozilo>
+    <vozilo id="V015">
+        <uporabnikId>U014</uporabnikId>
+        <znamka>Volkswagen</znamka>
+        <model>Passat</model>
+        <vrstaGoriva>dizel</vrstaGoriva>
+        <poraba>5.4</poraba>
+    </vozilo>
+</vozila>

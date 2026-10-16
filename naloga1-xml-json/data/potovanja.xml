@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<potovanja>
+    <potovanje id="P001">
+        <uporabnikId>U001</uporabnikId>
+        <voziloId>V001</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Ljubljana</cilj>
+        <datum>2026-10-20</datum>
+        <razdaljaKm>130.5</razdaljaKm>
+        <trajanjeMin>95</trajanjeMin>
+        <opomba>Poslovno potovanje</opomba>
+    </potovanje>
+    <potovanje id="P002">
+        <uporabnikId>U001</uporabnikId>
+        <voziloId>V002</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Graz</cilj>
+        <datum>2026-10-22</datum>
+        <razdaljaKm>70.0</razdaljaKm>
+        <trajanjeMin>60</trajanjeMin>
+        <opomba />
+    </potovanje>
+    <potovanje id="P003">
+        <uporabnikId>U002</uporabnikId>
+        <voziloId>V003</voziloId>
+        <zacetek>Celje</zacetek>
+        <cilj>Koper</cilj>
+        <datum>2026-11-05</datum>
+        <razdaljaKm>190.0</razdaljaKm>
+        <trajanjeMin>130</trajanjeMin>
+        <opomba>Izlet na morje</opomba>
+    </potovanje>
+    <potovanje id="P004">
+        <uporabnikId>U003</uporabnikId>
+        <voziloId>V004</voziloId>
+        <zacetek>Ljubljana</zacetek>
+        <cilj>Maribor</cilj>
+        <datum>2026-10-25</datum>
+        <razdaljaKm>130.0</razdaljaKm>
+        <trajanjeMin>95</trajanjeMin>
+        <opomba>Obisk prijateljev</opomba>
+    </potovanje>
+    <potovanje id="P005">
+        <uporabnikId>U004</uporabnikId>
+        <voziloId>V005</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Wien</cilj>
+        <datum>2026-11-10</datum>
+        <razdaljaKm>255.0</razdaljaKm>
+        <trajanjeMin>180</trajanjeMin>
+        <opomba>Vikend izlet</opomba>
+    </potovanje>
+    <potovanje id="P006">
+        <uporabnikId>U005</uporabnikId>
+        <voziloId>V006</voziloId>
+        <zacetek>Celje</zacetek>
+        <cilj>Ljubljana</cilj>
+        <datum>2026-10-28</datum>
+        <razdaljaKm>75.0</razdaljaKm>
+        <trajanjeMin>55</trajanjeMin>
+        <opomba />
+    </potovanje>
+    <potovanje id="P007">
+        <uporabnikId>U006</uporabnikId>
+        <voziloId>V007</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Zagreb</cilj>
+        <datum>2026-11-15</datum>
+        <razdaljaKm>120.0</razdaljaKm>
+        <trajanjeMin>100</trajanjeMin>
+        <opomba>Obisk sorodnikov</opomba>
+    </potovanje>
+    <potovanje id="P008">
+        <uporabnikId>U007</uporabnikId>
+        <voziloId>V008</voziloId>
+        <zacetek>Ptuj</zacetek>
+        <cilj>Maribor</cilj>
+        <datum>2026-10-30</datum>
+        <razdaljaKm>30.0</razdaljaKm>
+        <trajanjeMin>30</trajanjeMin>
+        <opomba>Sluzbena pot</opomba>
+    </potovanje>
+    <potovanje id="P009">
+        <uporabnikId>U008</uporabnikId>
+        <voziloId>V009</voziloId>
+        <zacetek>Ljubljana</zacetek>
+        <cilj>Koper</cilj>
+        <datum>2026-11-20</datum>
+        <razdaljaKm>105.0</razdaljaKm>
+        <trajanjeMin>75</trajanjeMin>
+        <opomba />
+    </potovanje>
+    <potovanje id="P010">
+        <uporabnikId>U009</uporabnikId>
+        <voziloId>V010</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Ljubljana</cilj>
+        <datum>2026-11-22</datum>
+        <razdaljaKm>130.5</razdaljaKm>
+        <trajanjeMin>100</trajanjeMin>
+        <opomba>Obisk konference</opomba>
+    </potovanje>
+    <potovanje id="P011">
+        <uporabnikId>U010</uporabnikId>
+        <voziloId>V011</voziloId>
+        <zacetek>Celje</zacetek>
+        <cilj>Graz</cilj>
+        <datum>2026-12-01</datum>
+        <razdaljaKm>115.0</razdaljaKm>
+        <trajanjeMin>90</trajanjeMin>
+        <opomba>Nakupovanje</opomba>
+    </potovanje>
+    <potovanje id="P012">
+        <uporabnikId>U011</uporabnikId>
+        <voziloId>V012</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Ptuj</cilj>
+        <datum>2026-12-05</datum>
+        <razdaljaKm>30.0</razdaljaKm>
+        <trajanjeMin>30</trajanjeMin>
+        <opomba />
+    </potovanje>
+    <potovanje id="P013">
+        <uporabnikId>U012</uporabnikId>
+        <voziloId>V013</voziloId>
+        <zacetek>Ljubljana</zacetek>
+        <cilj>Bled</cilj>
+        <datum>2026-12-10</datum>
+        <razdaljaKm>55.0</razdaljaKm>
+        <trajanjeMin>45</trajanjeMin>
+        <opomba>Enodnevni izlet</opomba>
+    </potovanje>
+    <potovanje id="P014">
+        <uporabnikId>U013</uporabnikId>
+        <voziloId>V014</voziloId>
+        <zacetek>Maribor</zacetek>
+        <cilj>Ljubljana</cilj>
+        <datum>2026-12-15</datum>
+        <razdaljaKm>130.5</razdaljaKm>
+        <trajanjeMin>95</trajanjeMin>
+        <opomba>Obisk zdravnika</opomba>
+    </potovanje>
+    <potovanje id="P015">
+        <uporabnikId>U014</uporabnikId>
+        <voziloId>V015</voziloId>
+        <zacetek>Celje</zacetek>
+        <cilj>Maribor</cilj>
+        <datum>2026-12-20</datum>
+        <razdaljaKm>55.0</razdaljaKm>
+        <trajanjeMin>45</trajanjeMin>
+        <opomba>Obisk druzine</opomba>
+    </potovanje>
+</potovanja>

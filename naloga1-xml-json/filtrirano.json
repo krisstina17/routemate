@@ -1,0 +1,46 @@
+[
+    {
+        "id": "P001",
+        "uporabnikId": "U001",
+        "voziloId": "V001",
+        "zacetek": "Maribor",
+        "cilj": "Ljubljana",
+        "datum": "2026-10-20",
+        "razdaljaKm": 130.5,
+        "trajanjeMin": 95,
+        "opomba": "Poslovno potovanje"
+    },
+    {
+        "id": "P006",
+        "uporabnikId": "U005",
+        "voziloId": "V006",
+        "zacetek": "Celje",
+        "cilj": "Ljubljana",
+        "datum": "2026-10-28",
+        "razdaljaKm": 75.0,
+        "trajanjeMin": 55,
+        "opomba": ""
+    },
+    {
+        "id": "P010",
+        "uporabnikId": "U009",
+        "voziloId": "V010",
+        "zacetek": "Maribor",
+        "cilj": "Ljubljana",
+        "datum": "2026-11-22",
+        "razdaljaKm": 130.5,
+        "trajanjeMin": 100,
+        "opomba": "Obisk konference"
+    },
+    {
+        "id": "P014",
+        "uporabnikId": "U013",
+        "voziloId": "V014",
+        "zacetek": "Maribor",
+        "cilj": "Ljubljana",
+        "datum": "2026-12-15",
+        "razdaljaKm": 130.5,
+        "trajanjeMin": 95,
+        "opomba": "Obisk zdravnika"
+    }
+]
