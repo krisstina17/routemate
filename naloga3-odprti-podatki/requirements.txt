@@ -1,0 +1,4 @@
+pyaxis
+pandas
+requests
+flask

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RouteMate – Gneča na destinaciji</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            margin: 0;
+            background: #f3f5f9;
+            color: #18212f;
+        }
+        header {
+            background: #2563eb;
+            color: white;
+            padding: 24px 16px;
+        }
+        header h1 {
+            margin: 0 0 4px;
+            font-size: 26px;
+        }
+        header p {
+            margin: 0;
+            opacity: .85;
+            font-size: 14px;
+        }
+        main {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 16px;
+        }
+        .kartica {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px #0001;
+        }
+        .izbira {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: end;
+        }
+        label {
+            font-size: 13px;
+            color: #6b7686;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        select, button {
+            padding: 9px 12px;
+            font-size: 15px;
+            border-radius: 8px;
+            border: 1px solid #d6dbe3;
+        }
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button.drugo {
+            background: #dbe6fd;
+            color: #2563eb;
+        }
+        #status {
+            font-size: 13px;
+            color: #6b7686;
+            margin-top: 10px;
+            min-height: 16px;
+        }
+        #stopnja {
+            font-size: 30px;
+            font-weight: bold;
+        }
+        .nizka { color: #16a34a; }
+        .srednja { color: #ea8a0c; }
+        .visoka { color: #dc2626; }
+        .dva {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 700px) {
+            .dva { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RouteMate – Kako polna je destinacija?</h1>
+        <p id="vir">Nalagam podatke …</p>
+    </header>
+
+    <main>
+        <div class="kartica">
+            <div class="izbira">
+                <label>Destinacija (občina)<select id="obcina"></select></label>
+                <label>Mesec potovanja<select id="mesec"></select></label>
+                <button onclick="prikazi()">Prikaži</button>
+                <button class="drugo" onclick="osvezi()">Osveži podatke</button>
+            </div>
+            <div id="status"></div>
+        </div>
+
+        <div class="kartica">
+            Turistična gneča: <span id="stopnja">–</span>
+            <div id="opis"></div>
+        </div>
+
+        <div class="kartica"><canvas id="graf1" height="110"></canvas></div>
+        <div class="dva">
+            <div class="kartica"><canvas id="graf2"></canvas></div>
+            <div class="kartica"><canvas id="graf3"></canvas></div>
+        </div>
+    </main>
+
+    <script>
+        const MESECI = ["jan", "feb", "mar", "apr", "maj", "jun", "jul", "avg", "sep", "okt", "nov", "dec"];
+        const grafi = {};
+        const $ = id => document.getElementById(id);
+
+        // nariše en graf (prej izbriše starega)
+        function narisi(id, tip, oznake, vrednosti, naslov, barve) {
+            if (grafi[id]) grafi[id].destroy();
+            grafi[id] = new Chart($(id), {
+                type: tip,
+                data: {
+                    labels: oznake,
+                    datasets: [{ data: vrednosti, backgroundColor: barve, borderColor: "#2563eb" }]
+                },
+                options: {
+                    plugins: {
+                        title: { display: true, text: naslov },
+                        legend: { display: false }
+                    }
+                }
+            });
+        }
+
+        // ob odprtju strani: napolni seznama občin in mesecev
+        async function zacetek() {
+            const info = await (await fetch("/api/obcine")).json();
+            $("vir").textContent = `Vir: SURS (podatki.gov.si) – zadnji podatki ${info.zadnje_leto}, analiza na zadnjem polnem letu ${info.polno_leto}.`;
+            $("obcina").innerHTML = info.obcine.map(o => `<option>${o}</option>`).join("");
+            $("obcina").value = "Maribor";
+            $("mesec").innerHTML = MESECI.map((m, i) => `<option value="${i + 1}">${m}</option>`).join("");
+            $("mesec").value = new Date().getMonth() + 1;
+            prikazi();
+        }
+
+        // ob kliku na "Prikaži"
+        async function prikazi() {
+            const obcina = $("obcina").value;
+            const mesec = $("mesec").value;
+            $("status").textContent = "Računam …";
+
+            const d = await (await fetch(`/api/gneca?obcina=${encodeURIComponent(obcina)}&mesec=${mesec}`)).json();
+
+            $("stopnja").textContent = d.stopnja.toUpperCase();
+            $("stopnja").className = d.stopnja;
+            $("opis").textContent = d.povprecje
+                ? `${obcina}, ${MESECI[mesec - 1]} ${d.leto}: ${d.nocitve.toLocaleString("sl")} prenočitev, povprečje meseca ${d.povprecje.toLocaleString("sl")} (${d.razmerje}×).`
+                : `Za občino ${obcina} SURS ne objavlja podatkov.`;
+
+            const barve = MESECI.map((_, i) => i + 1 == mesec ? "#dc2626" : "#93b4f5");
+            narisi("graf1", "bar", MESECI, d.po_mesecih, `Prenočitve po mesecih – ${obcina} (${d.leto})`, barve);
+            narisi("graf2", "bar", d.top_drzave, d.top_nocitve, `Top 5 držav – ${MESECI[mesec - 1]} ${d.leto}`, "#2563eb");
+            narisi("graf3", "line", d.trend_leta, d.trend_nocitve, `Skupne prenočitve po letih – ${obcina}`, "#2563eb");
+
+            $("status").textContent = "";
+        }
+
+        // ob kliku na "Osveži podatke": ponovno prenese PX datoteko s SURS
+        async function osvezi() {
+            $("status").textContent = "Prenašam nove podatke s SURS …";
+            await fetch("/api/osvezi", { method: "POST" });
+            zacetek();
+        }
+
+        zacetek();
+    </script>
+</body>
+</html>
