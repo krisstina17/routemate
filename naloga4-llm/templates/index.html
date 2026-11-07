@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RouteMate – Kam na izlet?</title>
+    <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #f3f5f9; color: #18212f; }
+        header { background: #2563eb; color: white; padding: 24px 16px; }
+        header h1 { margin: 0 0 4px; font-size: 26px; }
+        header p { margin: 0; opacity: .85; font-size: 14px; }
+        main { max-width: 1000px; margin: 20px auto; padding: 0 16px; }
+        .kartica { background: white; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 2px 8px #0001; }
+        .kartica h3 { margin: 0 0 14px; font-size: 17px; }
+
+        /* osnovni podatki: 3 polja v vrsti, na telefonu eno pod drugim */
+        .polja { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        .polja label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #6b7686; }
+        input, select { padding: 9px 12px; font-size: 15px; border-radius: 8px; border: 1px solid #d6dbe3; background: white; }
+
+        /* interesi: skupine v stolpcih, kljukice ena pod drugo */
+        .skupine { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 18px; }
+        .skupina h4 { margin: 0 0 8px; font-size: 13px; color: #2563eb; text-transform: uppercase; letter-spacing: .5px;
+                      border-bottom: 2px solid #dbe6fd; padding-bottom: 4px; }
+        .skupina label { display: block; font-size: 14px; margin-bottom: 6px; cursor: pointer; }
+        .skupina input { margin-right: 6px; }
+
+        button { padding: 10px 16px; font-size: 15px; border-radius: 8px; border: none;
+                 background: #2563eb; color: white; cursor: pointer; font-weight: 600; }
+        button:disabled { opacity: .6; cursor: wait; }
+        #gumb { width: 100%; }
+        #status { font-size: 14px; color: #6b7686; margin-top: 10px; min-height: 18px; }
+        .napaka { color: #dc2626 !important; }
+
+        /* rezultati */
+        .rezultati { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+        .rezultati h2 { margin: 0 0 2px; font-size: 22px; }
+        .regija { color: #6b7686; font-size: 13px; margin-bottom: 10px; }
+        .km { display: inline-block; background: #dbe6fd; color: #2563eb; border-radius: 6px; padding: 2px 8px; font-size: 13px; font-weight: 600; }
+        .sezona { font-size: 13px; margin: 6px 0 12px; font-weight: 600; }
+        .sezona.da { color: #16a34a; }
+        .sezona.ne { color: #ea8a0c; }
+        ul { padding-left: 18px; margin: 8px 0; }
+        .drugo { background: #dbe6fd; color: #2563eb; width: 100%; }
+        details { font-size: 13px; color: #6b7686; }
+        pre { white-space: pre-wrap; background: #f3f5f9; padding: 10px; border-radius: 8px; }
+
+        @media (max-width: 700px) {
+            .polja { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>RouteMate – Kam na izlet?</h1>
+        <p>Vnesi svoje želje in RouteMate ti s pomočjo umetne inteligence predlaga 3 destinacije v Sloveniji.</p>
+    </header>
+
+    <main>
+        <div class="kartica">
+            <h3>1. Osnovni podatki</h3>
+            <div class="polja">
+                <label>Začetna lokacija<input id="zacetek" value="Maribor"></label>
+                <label>Največ km v eno smer<input id="max_km" type="number" min="10" max="400" value="100"></label>
+                <label>Datum izleta<input id="datum" type="date" value="{{ danes }}"></label>
+                <label>Družba
+                    <select id="druzba">
+                        <option>sam/a</option>
+                        <option selected>par</option>
+                        <option>družina z otroki</option>
+                        <option>skupina prijateljev</option>
+                        <option>starejši</option>
+                    </select>
+                </label>
+                <label>Proračun
+                    <select id="proracun">
+                        <option>nizek</option>
+                        <option selected>srednji</option>
+                        <option>visok</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+
+        <div class="kartica">
+            <h3>2. Kaj te zanima?</h3>
+            <div class="skupine" id="interesi">
+                <div class="skupina">
+                    <h4>Narava</h4>
+                    <label><input type="checkbox" value="razgledi in narava" checked>razgledi in narava</label>
+                    <label><input type="checkbox" value="pohodništvo">pohodništvo</label>
+                    <label><input type="checkbox" value="jezera in reke">jezera in reke</label>
+                    <label><input type="checkbox" value="slapovi in soteske">slapovi in soteske</label>
+                    <label><input type="checkbox" value="jame">jame</label>
+                </div>
+                <div class="skupina">
+                    <h4>Hrana in pijača</h4>
+                    <label><input type="checkbox" value="lokalna kulinarika" checked>lokalna kulinarika</label>
+                    <label><input type="checkbox" value="vinske ceste in vinarne">vinarne</label>
+                    <label><input type="checkbox" value="turistične kmetije">turistične kmetije</label>
+                    <label><input type="checkbox" value="kavarne in slaščice">kavarne in slaščice</label>
+                </div>
+                <div class="skupina">
+                    <h4>Kultura</h4>
+                    <label><input type="checkbox" value="gradovi">gradovi</label>
+                    <label><input type="checkbox" value="muzeji in galerije">muzeji in galerije</label>
+                    <label><input type="checkbox" value="stara mestna jedra">stara mestna jedra</label>
+                    <label><input type="checkbox" value="cerkve in samostani">cerkve in samostani</label>
+                </div>
+                <div class="skupina">
+                    <h4>Aktivnosti</h4>
+                    <label><input type="checkbox" value="kolesarjenje">kolesarjenje</label>
+                    <label><input type="checkbox" value="smučanje in zimske aktivnosti">zimske aktivnosti</label>
+                    <label><input type="checkbox" value="adrenalinske aktivnosti">adrenalin</label>
+                    <label><input type="checkbox" value="aktivnosti za otroke">za otroke</label>
+                </div>
+                <div class="skupina">
+                    <h4>Sprostitev</h4>
+                    <label><input type="checkbox" value="terme in wellness">terme in wellness</label>
+                    <label><input type="checkbox" value="kopanje">kopanje</label>
+                    <label><input type="checkbox" value="miren sprehod brez gneče">mir, brez gneče</label>
+                </div>
+            </div>
+        </div>
+
+        <button id="gumb" onclick="predlagaj()">Predlagaj destinacije</button>
+        <div id="status"></div>
+
+        <div class="kartica" id="povzetek" hidden></div>
+        <div class="rezultati" id="rezultati"></div>
+
+        <div class="kartica" id="promptKartica" hidden>
+            <details>
+                <summary>Prompt, poslan modelu</summary>
+                <pre id="prompt"></pre>
+            </details>
+        </div>
+    </main>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        async function predlagaj() {
+            // zberemo vnos uporabnika
+            const vnos = {
+                zacetek: $("zacetek").value.trim(),
+                max_km: $("max_km").value,
+                datum: $("datum").value,
+                druzba: $("druzba").value,
+                proracun: $("proracun").value,
+                interesi: [...document.querySelectorAll("#interesi input:checked")].map(c => c.value),
+            };
+
+            $("gumb").disabled = true;
+            $("status").className = "";
+            $("status").textContent = "Sprašujem model …";
+            $("rezultati").innerHTML = "";
+            $("povzetek").hidden = true;
+
+            try {
+                const res = await fetch("/api/predlog", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(vnos),
+                });
+                const d = await res.json();
+                if (!res.ok) throw new Error(d.napaka);
+                prikazi(d);
+                $("status").textContent = "";
+            } catch (e) {
+                $("status").className = "napaka";
+                $("status").textContent = e.message;
+            } finally {
+                $("gumb").disabled = false;
+            }
+        }
+
+        function prikazi(d) {
+            $("povzetek").hidden = false;
+            $("povzetek").textContent = d.predlog.povzetek;
+
+            $("rezultati").innerHTML = d.predlog.destinacije.map(dest => `
+                <div class="kartica">
+                    <h2>${dest.kraj}</h2>
+                    <div class="regija">${dest.regija}</div>
+                    <span class="km">≈ ${dest.priblizna_razdalja_km} km</span>
+                    <p>${dest.zakaj_primerno}</p>
+                    <ul>${dest.aktivnosti.map(a => `<li>${a}</li>`).join("")}</ul>
+                    <div class="sezona ${dest.primerno_za_sezono ? "da" : "ne"}">${dest.primerno_za_sezono ? "Primerno za ta letni čas" : "Manj primerno za ta letni čas"}</div>
+                    <button class="drugo" onclick="alert('Načrtovanje poti do kraja ${dest.kraj} bo del glavne aplikacije.')">Načrtuj pot</button>
+                </div>`).join("");
+
+            $("promptKartica").hidden = false;
+            $("prompt").textContent = d.prompt;
+        }
+    </script>
+</body>
+</html>
