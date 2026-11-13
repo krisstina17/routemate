@@ -14,7 +14,7 @@ pip install requests beautifulsoup4
 ## Zagon
 
 ```
-python scraper.py
+python parser.py
 ```
 
 Datoteka `dogodki.json` se ustvari v mapi, iz katere zaženemo program. Zagon traja nekaj minut, ker program med zahtevami namenoma čaka 1,5 sekunde.
@@ -54,9 +54,9 @@ V praksi bi program zato zaganjali samodejno, na primer enkrat dnevno:
 
 - **Linux / macOS (cron)**, vsak dan ob 6:00:
   ```
-  0 6 * * * cd /pot/do/naloga2-parser && python3 scraper.py
+  0 6 * * * cd /pot/do/naloga2-parser && python3 parser.py
   ```
-- **Windows**: z *Razporejevalnikom opravil* (Task Scheduler) nastavimo dnevni zagon ukaza `python scraper.py` v mapi projekta.
+- **Windows**: z *Razporejevalnikom opravil* (Task Scheduler) nastavimo dnevni zagon ukaza `python parser.py` v mapi projekta.
 
 Ob vsakem zagonu se `dogodki.json` prepiše z novim, posodobljenim seznamom.
 
