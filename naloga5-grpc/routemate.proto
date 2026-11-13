@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package routemate;
+
+// ---------- SPOROČILA (message) ----------
+
+// Prazno sporočilo za klice, ki ne potrebujejo parametrov.
+message Prazno {}
+
+// Podatkovni tip: vozilo
+message Vozilo {
+  string id = 1;
+  string znamka = 2;
+  string model = 3;
+  string vrsta_goriva = 4;
+  double poraba = 5;            // l/100 km
+}
+
+message SeznamVozil {
+  repeated Vozilo vozila = 1;   // repeated = seznam
+}
+
+// Podatkovni tip: potovanje
+message Potovanje {
+  string id = 1;
+  string zacetek = 2;
+  string cilj = 3;
+  double razdalja_km = 4;
+  int32 trajanje_min = 5;
+}
+
+message SeznamPotovanj {
+  repeated Potovanje potovanja = 1;
+}
+
+// Zahtevek: katero potovanje s katerim vozilom
+message ZahtevekStrosek {
+  string potovanje_id = 1;
+  string vozilo_id = 2;
+}
+
+// Odgovor: strošek goriva
+message Strosek {
+  double litri = 1;
+  double cena_litra = 2;
+  double skupaj_eur = 3;
+}
+
+// En korak simulirane vožnje (pošilja se v toku)
+message Napredek {
+  int32 odstotek = 1;
+  double prevozeni_km = 2;
+  double porabljeni_litri = 3;
+  double strosek_eur = 4;
+}
+
+// ---------- STORITEV (service) ----------
+
+service RouteMate {
+  rpc PridobiVozila (Prazno) returns (SeznamVozil);                  // preprost RPC
+  rpc PridobiPotovanja (Prazno) returns (SeznamPotovanj);            // preprost RPC
+  rpc IzracunajStrosek (ZahtevekStrosek) returns (Strosek);          // preprost RPC
+  rpc SimulirajVoznjo (ZahtevekStrosek) returns (stream Napredek);   // server-side streaming
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RouteMate – gRPC</title>
+    <style>
+        body { font-family: "Segoe UI", Arial, sans-serif; margin: 0; background: #f3f5f9; color: #18212f; }
+        header { background: #2563eb; color: white; padding: 24px 16px; }
+        header h1 { margin: 0 0 4px; font-size: 26px; }
+        header p { margin: 0; opacity: .85; font-size: 14px; }
+        main { max-width: 700px; margin: 20px auto; padding: 0 16px; }
+        .kartica { background: white; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 2px 8px #0001; }
+        label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: #6b7686; margin-bottom: 12px; }
+        select { padding: 9px 12px; font-size: 15px; border-radius: 8px; border: 1px solid #d6dbe3; }
+        button { padding: 10px 16px; font-size: 15px; border-radius: 8px; border: none;
+                 background: #2563eb; color: white; cursor: pointer; font-weight: 600; margin-right: 8px; }
+        button:disabled { opacity: .6; }
+        .vrstica { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #eef1f5; }
+        .vrstica b { font-size: 18px; }
+        .vrstica:last-child { border-bottom: none; }
+        .vrstica.vsota b { color: #2563eb; }
+        .progres { background: #dbe6fd; border-radius: 8px; height: 22px; overflow: hidden; margin-bottom: 12px; }
+        .progres div { background: #2563eb; height: 100%; width: 0; color: white; font-size: 13px;
+                       text-align: center; line-height: 22px; transition: width .4s; }
+        .napaka { color: #dc2626; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>RouteMate – strošek in simulacija vožnje</h1>
+    <p>Podatki se pridobijo prek gRPC strežnika.</p>
+</header>
+
+<main>
+    <div class="kartica">
+        <label>Potovanje <select id="potovanje"></select></label>
+        <label>Vozilo <select id="vozilo"></select></label>
+        <button id="gumbStrosek">Izračunaj strošek</button>
+        <button id="gumbVoznja">Simuliraj vožnjo</button>
+    </div>
+
+    <div class="kartica" id="strosek" hidden></div>
+
+    <div class="kartica" id="voznja" hidden>
+        <div class="progres"><div id="vrstica">0 %</div></div>
+        <div class="vrstica"><span>Prevoženi km</span><b id="km">0</b></div>
+        <div class="vrstica"><span>Porabljeni litri</span><b id="litri">0</b></div>
+        <div class="vrstica vsota"><span>Strošek do zdaj</span><b id="eur">0 €</b></div>
+    </div>
+</main>
+
+<script>
+    const $ = id => document.getElementById(id);
+
+    // ob nalaganju: napolni oba seznama (RPC PridobiPotovanja in PridobiVozila)
+    async function nalozi() {
+        const p = await (await fetch("/api/potovanja")).json();
+        $("potovanje").innerHTML = p.potovanja.map(x =>
+            `<option value="${x.id}">${x.zacetek} → ${x.cilj} (${x.razdalja_km} km)</option>`).join("");
+
+        const v = await (await fetch("/api/vozila")).json();
+        $("vozilo").innerHTML = v.vozila.map(x =>
+            `<option value="${x.id}">${x.znamka} ${x.model} – ${x.vrsta_goriva}, ${x.poraba} l/100 km</option>`).join("");
+    }
+
+    function parametri() {
+        return `potovanje=${$("potovanje").value}&vozilo=${$("vozilo").value}`;
+    }
+
+    // RPC IzracunajStrosek
+    $("gumbStrosek").onclick = async () => {
+        const odg = await fetch("/api/strosek?" + parametri());
+        const s = await odg.json();
+        $("strosek").hidden = false;
+        $("strosek").innerHTML = s.napaka
+            ? `<p class="napaka">${s.napaka}</p>`
+            : `<div class="vrstica"><span>Poraba</span><b>${s.litri} l</b></div>
+               <div class="vrstica"><span>Cena goriva</span><b>${s.cena_litra} €/l</b></div>
+               <div class="vrstica vsota"><span>Skupaj</span><b>${s.skupaj_eur} €</b></div>`;
+    };
+
+    // RPC SimulirajVoznjo (stream): vsak prejeti korak takoj prikažemo
+    $("gumbVoznja").onclick = () => {
+        $("voznja").hidden = false;
+        $("gumbVoznja").disabled = true;
+        const tok = new EventSource("/api/voznja?" + parametri());
+
+        tok.onmessage = e => {
+            if (e.data === "KONEC") {
+                tok.close();
+                $("gumbVoznja").disabled = false;
+                return;
+            }
+            const k = JSON.parse(e.data);
+            $("vrstica").style.width = k.odstotek + "%";
+            $("vrstica").textContent = k.odstotek + " %";
+            $("km").textContent = k.prevozeni_km;
+            $("litri").textContent = k.porabljeni_litri;
+            $("eur").textContent = k.strosek_eur + " €";
+        };
+        tok.onerror = () => { tok.close(); $("gumbVoznja").disabled = false; };
+    };
+
+    nalozi();
+</script>
+</body>
+</html>
